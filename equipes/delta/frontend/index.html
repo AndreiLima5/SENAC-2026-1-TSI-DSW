@@ -3,29 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delta Tasks | Lista Profissional</title>
+    <title>Delta Tasks | Acesso Seguro</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Usando uma fonte moderna do Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <main class="app-container">
-        <header class="app-header">
-            <h1>Delta Tasks</h1>
-            <p>Gerencie suas tarefas com segurança e eficiência.</p>
-        </header>
+        
+        <!-- ========================================== -->
+        <!-- SEÇÃO DE AUTENTICAÇÃO (Login / Registro) -->
+        <!-- ========================================== -->
+        <section id="authSection" class="auth-section">
+            
+            <!-- Branding Visual -->
+            <div class="brand-header">
+                <div class="logo-box">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h1>Delta Tasks</h1>
+            </div>
 
-        <section class="input-section">
-            <form id="taskForm">
-                <input type="text" id="taskInput" placeholder="O que precisa ser feito?" autocomplete="off" required>
-                <button type="submit" id="addBtn">Adicionar</button>
-            </form>
+            <!-- TELA DE LOGIN -->
+            <!-- TELA DE LOGIN -->
+            <div id="loginView" class="auth-view">
+                <div class="auth-titles">
+                    <h2>Bem-vindo de volta</h2>
+                    <p>Insira suas credenciais para acessar seu painel.</p>
+                </div>
+
+                <form id="loginForm" class="auth-form">
+                    <div class="input-group">
+                        <label for="loginUser">Nome de Usuário</label>
+                        <input type="text" id="loginUser" placeholder="Digite aqui" autocomplete="off" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="loginPass">Senha</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="loginPass" placeholder="••••••••" required>
+                            <button type="button" class="toggle-password" data-target="loginPass">
+                                <!-- Ícone de Olho Aberto -->
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn shadow-btn">Fazer Login</button>
+                    <p id="loginMessage" class="auth-message"></p>
+                </form>
+
+                <div class="auth-switch">
+                    Não tem uma conta? <a href="#" id="goToRegister">Cadastre-se</a>
+                </div>
+            </div>
+
+            <!-- TELA DE REGISTRO (Oculta por padrão) -->
+            <div id="registerView" class="auth-view hidden">
+                <div class="auth-titles">
+                    <h2>Criar nova conta</h2>
+                    <p>Junte-se a nós e comece a organizar sua rotina.</p>
+                </div>
+
+                <form id="registerForm" class="auth-form">
+                    <div class="input-group">
+                        <label for="regUser">Nome de Usuário</label>
+                        <input type="text" id="regUser" placeholder="Escolha um nome único" autocomplete="off" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="regPass">Sua Senha</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="regPass" placeholder="Crie uma senha forte" required>
+                            <button type="button" class="toggle-password" data-target="regPass">
+                                <!-- Ícone de Olho Aberto -->
+                                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn outline-btn">Finalizar Cadastro</button>
+                    <p id="regMessage" class="auth-message"></p>
+                </form>
+
+                <div class="auth-switch">
+                    Já possui conta? <a href="#" id="goToLogin">Acesse aqui</a>
+                </div>
+            </div>
         </section>
 
-        <section class="list-section">
-            <ul id="taskList" class="task-list">
-                <!-- As tarefas serão injetadas aqui de forma segura pelo JS -->
-            </ul>
+        <!-- ========================================== -->
+        <!-- SEÇÃO PRINCIPAL DE TAREFAS -->
+        <!-- ========================================== -->
+        <section id="appSection" class="app-section hidden">
+            <header class="app-header header-with-logout">
+                <div class="app-header-brand">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    </svg>
+                    <h1>Delta Tasks</h1>
+                </div>
+                <button id="logoutBtn" class="logout-btn">Sair</button>
+            </header>
+
+            <section class="input-section">
+                <form id="taskForm">
+                    <input type="text" id="taskInput" placeholder="O que precisa ser feito?" autocomplete="off" required>
+                    <button type="submit" id="addBtn" class="primary-btn">Adicionar</button>
+                </form>
+            </section>
+
+            <nav class="task-tabs">
+                <button class="tab-btn active" data-filter="all">Todas</button>
+                <button class="tab-btn" data-filter="pending">Pendentes <span id="countPending" class="badge">0</span></button>
+                <button class="tab-btn" data-filter="completed">Concluídas</button>
+            </nav>
+
+            <section class="list-section">
+                <ul id="taskList" class="task-list"></ul>
+            </section>
         </section>
     </main>
     <script src="app.js"></script>

@@ -2,19 +2,15 @@
     --primary-color: #4F46E5;
     --primary-hover: #4338CA;
     --danger-color: #EF4444;
-    --danger-hover: #DC2626;
-    --bg-color: #F3F4F6;
+    --bg-color: #F8FAFC;
     --card-bg: #FFFFFF;
-    --text-main: #1F2937;
-    --text-muted: #6B7280;
-    --border-color: #E5E7EB;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+    --input-bg: #F1F5F9;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -22,147 +18,214 @@ body {
     color: var(--text-main);
     display: flex;
     justify-content: center;
-    padding: 2rem 1rem;
+    align-items: flex-start;
+    padding: 3rem 1rem;
     min-height: 100vh;
 }
+
+.hidden { display: none !important; }
 
 .app-container {
     background-color: var(--card-bg);
     width: 100%;
-    max-width: 500px;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    max-width: 440px; /* Levemente mais estreito para visual mais elegante */
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    border: 1px solid rgba(255,255,255,0.5);
     overflow: hidden;
     height: fit-content;
+    transition: all 0.3s ease;
 }
 
-.app-header {
-    padding: 2rem 2rem 1rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-}
+/* =========================================
+   ESTILOS DA ÁREA DE AUTENTICAÇÃO
+   ========================================= */
 
-.app-header h1 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
-}
+.auth-section { padding: 2.5rem 2rem; }
 
-.app-header p {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-}
-
-.input-section {
-    padding: 1.5rem 2rem;
-}
-
-#taskForm {
+.brand-header {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
-#taskInput {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1rem;
+.logo-box {
+    background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+    color: white;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 15px -3px rgba(79, 70, 229, 0.3);
+}
+
+.brand-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+.auth-titles { text-align: center; margin-bottom: 2rem; }
+.auth-titles h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+.auth-titles p { font-size: 0.9rem; color: var(--text-muted); }
+
+.auth-view { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.auth-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* Inputs Profissionais */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background-color: var(--input-bg);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: var(--text-main);
     font-family: inherit;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.2s ease;
 }
 
-#taskInput:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+input::placeholder { color: #94A3B8; }
+
+input:hover { background-color: #E2E8F0; }
+
+input:focus { 
+    outline: none; 
+    background-color: #FFFFFF;
+    border-color: var(--primary-color); 
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15); 
 }
 
-#addBtn {
-    padding: 0.75rem 1.5rem;
+/* Botões */
+.primary-btn {
+    padding: 0.85rem 1.5rem;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
+    width: 100%;
 }
 
-#addBtn:hover {
-    background-color: var(--primary-hover);
+.primary-btn:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+.primary-btn:active { transform: translateY(0); }
+
+.shadow-btn {
+    background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
 }
 
-.list-section {
-    padding: 0 2rem 2rem;
+.outline-btn { 
+    background-color: transparent; 
+    color: var(--text-main); 
+    border: 1px solid var(--border-color); 
+}
+.outline-btn:hover { background-color: var(--input-bg); transform: none; }
+
+.auth-switch { text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-top: 1.5rem; }
+.auth-switch a { color: var(--primary-color); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+.auth-switch a:hover { color: var(--primary-hover); }
+.auth-message { text-align: center; font-size: 0.85rem; min-height: 1.2rem; color: var(--danger-color); font-weight: 500; }
+
+/* =========================================
+   ESTILOS DO APP (Tarefas)
+   ========================================= */
+
+.app-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color); }
+.app-header-brand { display: flex; align-items: center; gap: 0.5rem; color: var(--primary-color); }
+.app-header-brand h1 { font-size: 1.1rem; font-weight: 700; }
+
+.header-with-logout { display: flex; justify-content: space-between; align-items: center; }
+.logout-btn { background: none; color: var(--text-muted); border: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: 0.2s; padding: 0.5rem; border-radius: 6px;}
+.logout-btn:hover { background-color: var(--input-bg); color: var(--danger-color); }
+
+.input-section { padding: 1.5rem 2rem 1rem; }
+#taskForm { display: flex; gap: 0.5rem; }
+#taskForm .primary-btn { width: auto; padding: 0.85rem 1.2rem; }
+
+.task-tabs { display: flex; padding: 0 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; }
+.tab-btn { background: none; border: none; padding: 0.8rem 0; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+.tab-btn:hover { color: var(--text-main); }
+.tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+.badge { background-color: var(--input-bg); color: var(--text-muted); font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 12px; }
+.tab-btn.active .badge { background-color: var(--primary-color); color: white; }
+
+.list-section { padding: 0 2rem 2rem; }
+.task-list { list-style: none; }
+.task-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem; background-color: #FFFFFF; border: 1px solid var(--border-color); margin-bottom: 0.5rem; border-radius: 10px; animation: slideUp 0.3s ease-out; box-shadow: 0 1px 2px rgba(0,0,0,0.02); }
+.task-content { display: flex; align-items: center; gap: 1rem; flex: 1; overflow: hidden; }
+.task-checkbox { width: 1.25rem; height: 1.25rem; accent-color: var(--primary-color); cursor: pointer; }
+.task-text { font-size: 0.95rem; font-weight: 500; word-break: break-word; transition: color 0.2s; }
+.task-item.completed .task-text { text-decoration: line-through; color: #94A3B8; font-weight: 400; }
+
+.delete-btn { background: none; color: #94A3B8; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: 0.2s; padding: 0.4rem; }
+.delete-btn:hover { color: var(--danger-color); }
+
+.empty-state { text-align: center; color: var(--text-muted); font-size: 0.9rem; padding: 2rem 0; }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 480px) {
+    .app-container { border-radius: 0; border: none; box-shadow: none; min-height: 100vh; max-width: 100%; }
+    body { padding: 0; background-color: var(--card-bg); }
+    .task-tabs { gap: 1rem; justify-content: space-between; }
 }
 
-.task-list {
-    list-style: none;
-}
-
-.task-item {
+/* Container relativo para posicionar o olho */
+.password-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: var(--bg-color);
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    transition: transform 0.2s, opacity 0.2s;
 }
 
-.task-content {
+/* Espaço extra na direita para a senha não bater no ícone */
+.password-wrapper input {
+    padding-right: 2.8rem;
+}
+
+/* Botão do Olho Invisível (Apenas o Ícone) */
+.toggle-password {
+    position: absolute;
+    right: 0.8rem;
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    flex: 1;
-    overflow: hidden;
-}
-
-.task-checkbox {
-    width: 1.25rem;
-    height: 1.25rem;
-    accent-color: var(--primary-color);
-    cursor: pointer;
-}
-
-.task-text {
-    font-size: 1rem;
-    word-break: break-word;
+    justify-content: center;
+    padding: 0.2rem;
     transition: color 0.2s;
 }
 
-.task-item.completed .task-text {
-    text-decoration: line-through;
-    color: var(--text-muted);
+.toggle-password:hover {
+    color: var(--primary-color);
 }
 
-.delete-btn {
-    background-color: transparent;
-    color: var(--danger-color);
-    border: 1px solid var(--danger-color);
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s;
-}
-
-.delete-btn:hover {
-    background-color: var(--danger-color);
-    color: white;
-}
-
-/* Responsividade */
-@media (max-width: 480px) {
-    .app-container {
-        border-radius: 0;
-        box-shadow: none;
-    }
-    body {
-        padding: 0;
-    }
+.eye-icon {
+    width: 20px;
+    height: 20px;
 }

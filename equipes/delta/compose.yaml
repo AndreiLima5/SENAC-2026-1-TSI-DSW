@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # 1. Banco de Dados MySQL
+  db:
+    image: docker.io/library/mysql:8.0
+    container_name: todo-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: andrei1248
+      MYSQL_DATABASE: todo_db
+    ports:
+      - "3306:3306"
+    volumes:
+      # Injeta o script de criação da tabela na inicialização do banco
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:Z
+      # Cria um volume persistente para que as tarefas não sumam se o container reiniciar
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Backend Go
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Containerfile
+    container_name: todo-backend
+    environment:
+      DB_USER: root
+      DB_PASS: senha_segura_123
+      # O DB_HOST é exatamente o nome do serviço do banco de dados (db)
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: todo_db
+      API_PORT: 8080
+      ALLOWED_ORIGIN: "*"
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy # Só liga o backend quando o MySQL estiver 100% pronto
+
+  # 3. Frontend Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Containerfile
+    container_name: todo-frontend
+    ports:
+      - "5500:80"
+    depends_on:
+      - backend
+
+# Declaração do volume nomeado para o banco de dados
+volumes:
+  db_data:

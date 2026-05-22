@@ -1,0 +1,13 @@
+# Usa uma imagem leve do Nginx baseada em Alpine
+FROM docker.io/library/nginx:alpine
+
+# Remove a página padrão do Nginx (opcional, mas recomendado)
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copia os arquivos do nosso frontend para o diretório raiz do Nginx
+COPY . /usr/share/nginx/html
+
+# Expõe a porta 80 do container
+EXPOSE 80
+
+# O Nginx já possui um CMD padrão que inicia o servidor, então não precisamos declarar
